@@ -10,11 +10,13 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 
 // custom
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [DynamicFormComponent],
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     ButtonModule,
     DropdownModule,

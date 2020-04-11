@@ -20,7 +20,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   // methods
-  // -- lifecycle
+  // -- lifecycle methods
   ngOnInit(): void {
     this.dynamicForm = new FormGroup({
       main: new FormControl(
@@ -29,20 +29,20 @@ export class DynamicFormComponent implements OnInit {
       ),
       extras: new FormGroup({}),
     });
+    this.dynamicForm.get('main')?.valueChanges.subscribe((value) => {
+      // clean old extra fields when main change
+      this.removeFormExtras();
+      // add an extra field if needed
+      this.displayExtraForm(value);
+    });
   }
 
   // -- custom methods
-  displayDependantForm(e: any) {
-    // clean old extra fields
-    this.removeFormExtras();
-
-    if (e.event.value) {
-      // find chosen one in between options
-      const flowStep = e.options.find(
-        (el: FlowStep) => el.value === e.event.value
+  displayExtraForm(value: any) {
+    if (value) {
+      const flowStep = this.flow.main.items?.find(
+        (el: FlowStep) => el.value === value
       );
-
-      // add an extra field if needed
       if (flowStep && flowStep.next && this.flow.extras[flowStep.next]) {
         this.addFormExtra(flowStep.next, this.flow.extras[flowStep.next]);
       }
@@ -64,7 +64,12 @@ export class DynamicFormComponent implements OnInit {
 
   // -- event handlers methods
   onSubmit() {
-    const { main, extras } = this.dynamicForm.value;
-    console.log('SEND', { ...main, ...extras });
+    if (this.dynamicForm.valid) {
+      const { main, extras } = this.dynamicForm.value;
+      console.log('SEND', { ...main, ...extras });
+      this.dynamicForm.reset();
+    } else {
+      console.error('All fields are required.');
+    }
   }
 }
