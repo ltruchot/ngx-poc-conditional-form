@@ -1,0 +1,38 @@
+<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+  <div>
+    <p-dropdown
+      [options]="flow.main.items"
+      formControlName="main"
+      (onChange)="
+        displayDependantForm({ event: $event, options: flow.main.items })
+      "
+    ></p-dropdown>
+  </div>
+
+  <div
+    *ngFor="let key of objectKeys(formExtras.controls); let i = index"
+    formGroupName="extras"
+  >
+    <div [ngSwitch]="flow.extras[key].type">
+      <div *ngSwitchCase="'textarea'">
+        <label>{{ flow.extras[key].label }}</label
+        ><br />
+        <textarea
+          pInputTextarea
+          [rows]="5"
+          [cols]="100"
+          [formControlName]="key"
+          [value]="flow.extras[key].value"
+        ></textarea>
+      </div>
+      <input *ngSwitchDefault />
+    </div>
+  </div>
+
+  <div>
+    <p-button label="Send" [disabled]="dynamicForm.invalid"></p-button>
+  </div>
+</form>
+
+<pre>Valid: {{ dynamicForm.valid | json }}</pre>
+<pre>{{ dynamicForm.value | json }}</pre>
