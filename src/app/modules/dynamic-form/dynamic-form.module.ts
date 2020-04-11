@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 // primeng
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
 // custom
@@ -19,7 +18,6 @@ import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
     ReactiveFormsModule,
     ButtonModule,
     DropdownModule,
-    CheckboxModule,
     InputTextareaModule,
   ],
   exports: [DynamicFormComponent],

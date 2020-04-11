@@ -13,13 +13,27 @@ export class DynamicFormComponent implements OnInit {
   dynamicForm: FormGroup;
   @Input()
   flow: Flow;
+
   // getters
   get formExtras(): FormGroup {
     return this.dynamicForm.get('extras') as FormGroup;
   }
 
-  // methos
+  // methods
   constructor() {}
+
+  // -- lifecycle
+  ngOnInit(): void {
+    this.dynamicForm = new FormGroup({
+      main: new FormControl(
+        this.flow.main.value,
+        this.flow.main.validators || []
+      ),
+      extras: new FormGroup({}),
+    });
+  }
+
+  // -- custom methods
   displayDependantForm(e: any) {
     // clean old extra fields
     this.removeFormExtras();
@@ -51,16 +65,7 @@ export class DynamicFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.dynamicForm = new FormGroup({
-      main: new FormControl(
-        this.flow.main.value,
-        this.flow.main.validators || []
-      ),
-      extras: new FormGroup({}),
-    });
-  }
-
+  // -- event handlers methods
   onSubmit() {
     const { main, extras } = this.dynamicForm.value;
     console.log('SEND', { ...main, ...extras });

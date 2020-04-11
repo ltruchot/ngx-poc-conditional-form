@@ -1,4 +1,8 @@
-# NgxPocConditionalForm
+# Ngx Poc Conditional Form
+
+This is a simple demonstration of dependant form groups with Angular.
+
+Choose the sad emoji to see the effect.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
 
