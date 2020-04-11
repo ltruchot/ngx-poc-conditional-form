@@ -1,0 +1,32 @@
+import { Flow } from '../modules/dynamic-form/dynamic-form/dynamic-form-models';
+import { Validators } from '@angular/forms';
+
+export const flow: Flow = {
+  main: {
+    type: 'select',
+    label: '',
+    validators: [Validators.required],
+    value: null,
+    items: [
+      {
+        label: 'What is your level of satisfaction?',
+        value: null,
+      },
+      {
+        label: '😞',
+        value: { id: 0 },
+        next: 'explanation',
+      },
+      { label: '😐', value: { id: 1 } },
+      { label: '😊', value: { id: 2 } },
+    ],
+  },
+  extras: {
+    explanation: {
+      type: 'textarea',
+      label: 'Why are you disapointed?',
+      value: '',
+      validators: [Validators.required],
+    },
+  },
+};
