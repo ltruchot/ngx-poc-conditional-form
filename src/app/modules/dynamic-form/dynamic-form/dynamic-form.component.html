@@ -15,8 +15,7 @@
   >
     <div [ngSwitch]="flow.extras[key].type">
       <div *ngSwitchCase="'textarea'">
-        <label>{{ flow.extras[key].label }}</label
-        ><br />
+        <label>{{ flow.extras[key].label }}</label>
         <textarea
           pInputTextarea
           [rows]="5"

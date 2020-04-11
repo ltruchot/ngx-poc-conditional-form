@@ -9,10 +9,10 @@ import { Flow, FlowStep } from './dynamic-form-models';
 })
 export class DynamicFormComponent implements OnInit {
   // props
-  objectKeys = Object.keys;
-  dynamicForm: FormGroup;
   @Input()
   flow: Flow;
+  objectKeys = Object.keys;
+  dynamicForm: FormGroup;
 
   // getters
   get formExtras(): FormGroup {
@@ -20,8 +20,6 @@ export class DynamicFormComponent implements OnInit {
   }
 
   // methods
-  constructor() {}
-
   // -- lifecycle
   ngOnInit(): void {
     this.dynamicForm = new FormGroup({
@@ -39,15 +37,14 @@ export class DynamicFormComponent implements OnInit {
     this.removeFormExtras();
 
     if (e.event.value) {
-      // find concerned in between options
-      const flowStep = e.options.find((el: FlowStep) => {
-        return el.value && el.value === e.event.value;
-      });
+      // find chosen one in between options
+      const flowStep = e.options.find(
+        (el: FlowStep) => el.value === e.event.value
+      );
 
       // add an extra field if needed
-      if (flowStep && flowStep.next) {
-        const nextStep = this.flow.extras[flowStep.next];
-        this.addFormExtra(flowStep.next, nextStep);
+      if (flowStep && flowStep.next && this.flow.extras[flowStep.next]) {
+        this.addFormExtra(flowStep.next, this.flow.extras[flowStep.next]);
       }
     }
   }
@@ -60,9 +57,9 @@ export class DynamicFormComponent implements OnInit {
   }
 
   removeFormExtras() {
-    Object.keys(this.formExtras.controls).forEach((key: string) => {
-      this.formExtras.removeControl(key);
-    });
+    Object.keys(this.formExtras.controls).forEach((key) =>
+      this.formExtras.removeControl(key)
+    );
   }
 
   // -- event handlers methods
